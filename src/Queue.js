@@ -1,5 +1,5 @@
 class _Node {
-  constructor(data, next, prev=null) {
+  constructor(data, next, prev = null) {
     this.data = data;
     this.next= next;
     this.prev = prev;
@@ -34,7 +34,7 @@ class Queue {
       this.first = null;
     }
     firstNode.next = null;
-    return node.value;
+    return firstNode.data
   }
   size() {
     let currNode = this.first;

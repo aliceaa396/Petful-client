@@ -5,7 +5,7 @@ import RequestForm from './Routes/RequestForm'
 import DogAdoptionPage from './Routes/DogAdoptionPage'
 import CatAdoptionPage from './Routes/CatAdoptionPage'
 import AdoptionSummary from './Routes/AdoptionSummary'
-
+import './App.css'
 export class App extends Component {
   render() {
     return (

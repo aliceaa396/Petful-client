@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import NextDog from './NextDog';
-import apiService from '../../services/apiService';
+import PetfulApiService from '../../services/PetfulApiService';
 import PetfulContext from '../../Context/PetfulContext';
 
 export class DogList extends Component {
   static contextType = PetfulContext;
 
   showDogs = res => {
-    apiService.displayDogs(res)
+    PetfulApiService.displayDogs(res)
       .then(dispRes => {
         this.context.setAllDogs(dispRes);
       })
       .then(dog => {
-        apiService.deleteDog().then(()=> {
+        PetfulApiService.deleteDog().then(()=> {
           if(dog) {
             setTimeout(() => {
               this.updateDog();
@@ -24,7 +24,7 @@ export class DogList extends Component {
   };
 
   componentDidMount() {
-    apiService.getDogs().then(res => this.showDogs(res));
+    PetfulApiService.getDogs().then(res => this.showDogs(res));
   }
 
 

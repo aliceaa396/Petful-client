@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import apiService from '../services/apiService';
+import PetfulApiService from '../services/PetfulApiService';
 import PetfulContext from '../Context/PetfulContext';
 import AdopterList from '../Components/Adopters/AdopterList';
 import { adoptionQueue, adopterNames } from '../Queue';
@@ -14,6 +14,7 @@ export class Adoption extends Component {
       goBack: () => {}
     }
   };
+
   static contextType = PetfulContext;
 
   handleName = e => {
@@ -39,7 +40,7 @@ export class Adoption extends Component {
   }
 
   updateDog = () => {
-    apiService.getDogs().then(response => {
+    PetfulApiService.getDogs().then(response => {
       this.setState({
         dog: response.dog
       });
@@ -48,7 +49,7 @@ export class Adoption extends Component {
 
   componentDidMount() {
     this.context.clearError();
-    apiService.getDogs()
+    PetfulApiService.getDogs()
     .then(this.context.setDog)
     .then(() => this.updateDog())
     .catch(this.context.setError)
@@ -63,11 +64,11 @@ export class Adoption extends Component {
   }
 
   renderWaitList() {
-    const { waitlist } = this.context;
+    const { waitList } = this.context;
     return (
       <div>
         <h2>
-          waitList
+          WaitList
         </h2>
         <ul>
           {waitList.map((person, idx) => (
@@ -79,9 +80,9 @@ export class Adoption extends Component {
   }
 
   removePerson(idx) {
-    const newWaitList = this.context.WaitList.filter(index => index !== idx);
+    const newWaitList = this.context.waitList.filter(index => index !== idx);
     this.setState({
-      waitlist: [...newWaitList]
+      waitList: [...newWaitList]
     });
   }
 
@@ -108,7 +109,7 @@ export class Adoption extends Component {
   }
 
   render() { 
-    const { waitlist, cat, dog } = this.context;
+    const { cat, dog } = this.context;
     return (
       <div>
         <h3> Next up to adopt: </h3>

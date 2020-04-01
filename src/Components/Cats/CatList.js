@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import NextCat from './NextCat';
-import apiService from '../../services/apiService';
+import PetfulApiService from '../../services/PetfulApiService';
 import PetfulContext from '../../Context/PetfulContext';
 
 export class CatList extends Component {
   static contextType = PetfulContext;
 
   showCats = res => {
-    apiService.displayCats(res)
+    PetfulApiService.displayCats(res)
       .then(dispRes => {
         this.context.setAllCats(dispRes);
       })
       .then(cat => {
-        apiService.deleteCat().then(()=> {
+        PetfulApiService.deleteCat().then(()=> {
           if(cat) {
             setTimeout(() => {
               this.updateCat();
@@ -24,13 +24,13 @@ export class CatList extends Component {
   };
 
   componentDidMount() {
-    apiService.getCats().then(res => this.showCats(res));
+    PetfulApiService.getCats().then(res => this.showCats(res));
   }
 
 
   renderNextCat() {
     const { nextCat } = this.context;
-    return !nextCat.next ? (
+    return !nextCat.value ? (
       "Sorry there are no cats available"
     ) 
     : 

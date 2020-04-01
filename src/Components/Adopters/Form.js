@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import PetfulContext from '../../Context/PetfulContext';
-
+import './Form.css'
 export default class Form extends Component {
   static defaultProps = {
     history: {
@@ -36,8 +36,8 @@ export default class Form extends Component {
 
   render() {
     return (
-      <div>
-        <form onSubmit={this.handleSubmitCat}>
+      <div className="container">
+        <form className="submission-form" onSubmit={this.handleSubmitCat}>
           <label className="form-name">
             Adopt a Cat
           </label>
@@ -48,14 +48,14 @@ export default class Form extends Component {
             id="form-name"
             onChange={e => this.setState({ catAdopter: e.target.value})}
           />
-          <button type="submit"> Join the Waiting List </button>
+          <button className="adopt-btn" type="submit"> Join the Waiting List </button>
 
           <Link to="/cat-adoptions">
-            <button> See all of our Cats! </button>
+            <button className="adopt-btn"> See all of our Cats! </button>
           </Link>
         </form>
 
-        <form onSubmit={this.handleSubmitDog}>
+        <form className="submission-form" onSubmit={this.handleSubmitDog}>
           <label className="form-name">
             Adopt a Dog
           </label>
@@ -66,10 +66,10 @@ export default class Form extends Component {
             id="form-name"
             onChange={e => this.setState({ dogAdopter: e.target.value})}
           />
-          <button type="submit"> Join the Waiting List </button>
+          <button className="adopt-btn" type="submit"> Join the Waiting List </button>
 
           <Link to="/dog-adoptions">
-            <button> See all of our Dogs! </button>
+            <button className="adopt-btn"> See all of our Dogs! </button>
           </Link>
         </form>
 

@@ -24,7 +24,7 @@ export class CatAdoptionPage extends Component {
       adoptionComplete: true,
       choseCat: !this.state.choseCat
     });
-  };
+  }
 
   renderMessage () {
     const { catAdopter, catWaitList } = this.context;
@@ -115,7 +115,7 @@ export class CatAdoptionPage extends Component {
         </Link>
 
         <h3> More Cats </h3>
-        <CatList />
+          <CatList />
       </div>
     )
   }

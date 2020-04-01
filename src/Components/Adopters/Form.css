@@ -1,0 +1,24 @@
+.container {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.submission-form {
+  display: flex;
+  justify-content: space-between;
+  align-items: justify;
+  height: 225px;
+  flex-direction: column;
+  margin: 10px;
+}
+
+input {
+  padding: 12px;
+  border-radius: 5px;
+  outline: none;
+  border: none;
+}
+
+.adopt-btn {
+  font-size: 15px;
+}

@@ -1,6 +1,6 @@
 import config from '../config';
 
-const apiService = {
+const PetfulApiService = {
   getDogs(){
     return fetch(`${config.API_ENDPOINT}/dogs`)
     .then(res => 
@@ -68,7 +68,8 @@ const apiService = {
     return fetch(`${config.API_ENDPOINT}/cats/morecats`).then(res => 
       !res.ok ? res.text().then(e => Promise.reject(e)) : res.json()  
     )
-  }
-}
+  },
 
-export default apiService;
+};
+
+export default PetfulApiService;

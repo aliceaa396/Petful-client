@@ -102,26 +102,26 @@ export class PetProvider extends Component {
   render() {
     const value = {
       dog: this.state.dog,
-      cat: this.state.cat,
-      setDog: this.state.setDog,
-      setDogPerson: this.state.setDogPerson,
-      setAllDogs: this.state.setAllDogs,
-      setDogWaitList: this.state.setDogWaitList,
-      setCat: this.state.setCat,
-      setCatPerson: this.state.setCatPerson,
-      setCatWaitList: this.state.setCatWaitList,
-      setAllCats: this.state.setAllCats,
+      setDog: this.setDog,
+      setDogPerson: this.setDogPerson,
+      setDogWaitList: this.setDogWaitList,
+      setAllDogs: this.setAllDogs,
       nextDog: this.state.nextDog,
-      nextCat: this.state.nextCat,
       dogWaitList:this.state.dogWaitList,
-      catWaitList: this.state.catWaitList,
       dogAdopter: this.state.dogAdopter,
-      resetDogPerson: this.state.resetDogPerson,
+      resetDogPerson: this.resetDogPerson,
+      cat: this.state.cat,
+      setCat: this.setCat,
+      setCatPerson: this.setCatPerson,
+      setCatWaitList: this.setCatWaitList,
+      setAllCats: this.setAllCats,
+      nextCat: this.state.nextCat,
+      catWaitList: this.state.catWaitList,
       catAdopter: this.state.catAdopter,
-      resetCatPerson: this.state.resetCatPerson,
+      resetCatPerson: this.resetCatPerson,
       currentPerson: this.state.currentPerson,
-      setError: this.state.setError,
-      clearError: this.state.clearError
+      setError: this.setError,
+      clearError: this.clearError
     }
     return (
       <PetfulContext.Provider value={value}>

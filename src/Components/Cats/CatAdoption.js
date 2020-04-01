@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import apiService from "../../services/apiService";
+import PetfulApiService from "../../services/PetfulApiService";
 import PetfulContext from "../../Context/PetfulContext";
 
 export default class CatAdoption extends Component {
@@ -11,12 +11,12 @@ export default class CatAdoption extends Component {
 
     catWaitList.shift();
 
-    apiService.getCats()
-      .then(response => {
-        this.context.setCat(response.cat);
+    PetfulApiService.getCats()
+      .then(res => {
+        this.context.setCat(res.cat);
       })
       .then(cat => {
-        apiService.deleteCat().then(() => {
+        PetfulApiService.deleteCat().then(() => {
           if (catWaitList.length > 1) {
             setTimeout(() => {
               this.updateCat();
@@ -30,7 +30,7 @@ export default class CatAdoption extends Component {
   };
 
   componentDidMount() {
-    apiService.reloadCats().then(() => {
+    PetfulApiService.reloadCats().then(() => {
       this.updateCat();
     });
   }
