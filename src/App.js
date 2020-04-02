@@ -1,25 +1,37 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Route, Switch } from 'react-router-dom';
 import Landing from './Routes/Landing'
-import RequestForm from './Routes/RequestForm'
-import DogAdoptionPage from './Routes/DogAdoptionPage'
-import CatAdoptionPage from './Routes/CatAdoptionPage'
-import AdoptionSummary from './Routes/AdoptionSummary'
+import DogAdoption from './Components/Dogs/DogAdoption'
+import CatAdoption from './Components/Cats/CatAdoption'
 import './App.css'
-export class App extends Component {
-  render() {
-    return (
-      <div className="App">
+
+
+export function App() {
+  return (
+    <div className="App">
         <Switch>
-          <Route exact path='/' component={Landing} />
-          <Route path='/dog-adoptions' component={DogAdoptionPage} />
-          <Route path='/cat-adoptions' component={CatAdoptionPage} />
-          <Route path='/adoption-summary' component={AdoptionSummary} />
-          <Route path='/request' component={RequestForm} />
+          <Route 
+            exact path='/' 
+            render={renderProps => {
+              return <Landing {...renderProps} />
+            }} 
+          />
+          <Route 
+            path='/dog-adoptions' 
+            render={renderProps => {
+              return <DogAdoption {...renderProps} />
+            }} 
+          />
+          <Route 
+            path='/cat-adoptions' 
+            render={renderProps => {
+              return <CatAdoption {...renderProps} />
+            }}  
+          />
         </Switch>
       </div>
-    )
-  }
+  )
 }
+
 
 export default App;

@@ -1,75 +1,60 @@
 import config from '../config';
 
 const PetfulApiService = {
-  getDogs(){
-    return fetch(`${config.API_ENDPOINT}/dogs`)
-    .then(res => 
-      !res.ok ? res.json().then(e => Promise.reject(e)) : res.json()  
-    )
+  getDog(){
+    return fetch(`${config.API_ENDPOINT}/dogs`, {
+      method: 'GET',
+      headers: {
+        'content-type' : 'application/json'   
+      }
+    });
   },
 
   deleteDog() {
-    return fetch(`${config.API_ENDPOINT}/dogs`, {
+    return fetch(`${config.API_ENDPOINT}/dogs/:id`, {
       method: 'DELETE',
       headers: {
-        'content-type' : 'application/json',
-        'Accept': 'application/json'
-      }
-    })
-    .then(res => {
-      if (res.ok) {
-        return {};
-      } else {
-        return res.json().then(event => Promise.reject(event));
+        'content-type' : 'application/json'
       }
     });
   },
-  displayDogs() {
-    return fetch(`${config.API_ENDPOINT}/dogs/alldogs`)
-    .then(res => 
-      !res.ok ? res.json().then(e => Promise.reject(e)) : res.json()  
-    )
-  },
-  reloadDogs() {
-    return fetch(`${config.API_ENDPOINT}/dogs/moredogs`)
-    .then(res => 
-      !res.ok ? res.json().then(e => Promise.reject(e)) : res.json()  
-    );
-  },
-  getCats() {
-    return fetch(`${config.API_ENDPOINT}/cats`)
-    .then(res => 
-      !res.ok ? res.json().then(e => Promise.reject(e)) : res.json()  
-    )
-  },
-  deleteCat() {
+ 
+  getCat() {
     return fetch(`${config.API_ENDPOINT}/cats`, {
-      method: 'DELETE',
+      method: 'GET',
       headers: {
-        'content-type' : 'application/json',
-        'Accept': 'application/json'
-      }
-    })
-    .then(res => {
-      if (res.ok) {
-        return {};
-      } else {
-        return res.json().then(event => Promise.reject(event));
+        'content-type' : 'application/json'   
       }
     });
-  },
-  displayCats() {
-    return fetch(`${config.API_ENDPOINT}/cats/allcats`)
-    .then(res => 
-      !res.ok ? res.json().then(e => Promise.reject(e)) : res.json()  
-    )
-  },
-  reloadCats() {
-    return fetch(`${config.API_ENDPOINT}/cats/morecats`).then(res => 
-      !res.ok ? res.text().then(e => Promise.reject(e)) : res.json()  
-    )
   },
 
+  deleteCat() {
+    return fetch(`${config.API_ENDPOINT}/cats/:id`, {
+      method: 'DELETE',
+      headers: {
+        'content-type' : 'application/json'
+      }
+    })
+  },
+
+  getQueue() {
+    return fetch(`${config.API_ENDPOINT}/adopters`, {
+      method: 'GET',
+      headers: {
+        'content-type' : 'application/json'   
+      }
+    });
+  },
+
+  deleteAdopter() {
+    return fetch(`${config.API_ENDPOINT}/adopters`, {
+      method: 'DELETE',
+      headers: {
+        'content-type' : 'application/json'   
+      }
+    });
+  }
+  
 };
 
 export default PetfulApiService;
