@@ -49,7 +49,7 @@ export default class DogAdoption extends Component {
   }
 
   displayQ = (q) => {
-    let str = "";
+    let str = '';
     let currNode = q.first
     while(currNode !== null) {
       str += currNode.value.name + ', ';
@@ -69,12 +69,13 @@ export default class DogAdoption extends Component {
 
   render() {
     const dog  = this.state.dog;
+    console.log(this.state.dog)
 
     return (
-      <section>
-        {/* <Link to="/request">
+      <div>
+        <Link to="/request">
           <img src={dog.imageURL} alt={dog.name} />
-        </Link> */}
+        </Link>
         <div>
           <span>Name: </span>{dog.name}
           <span>Description: </span>{dog.imageURL}
@@ -83,7 +84,13 @@ export default class DogAdoption extends Component {
           <span>Breed: </span>{dog.breed}
           <span>Story: </span>{dog.story}
         </div>
-      </section>
+  
+
+        <div>
+          <h3> Place in Line </h3>
+          {this.displayLoading()}
+        </div>
+      </div> 
     );
   }
 }
