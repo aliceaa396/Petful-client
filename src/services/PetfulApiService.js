@@ -15,6 +15,7 @@ const PetfulApiService = {
       method: 'DELETE',
       headers: {
         'content-type' : 'application/json'
+      
       }
     });
   },
