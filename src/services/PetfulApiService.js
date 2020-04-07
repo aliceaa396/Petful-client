@@ -11,7 +11,7 @@ const PetfulApiService = {
   },
 
   deleteDog() {
-    return fetch(`${config.API_ENDPOINT}/dogs/:id`, {
+    return fetch(`${config.API_ENDPOINT}/dogs/delete`, {
       method: 'DELETE',
       headers: {
         'content-type' : 'application/json'
@@ -29,7 +29,7 @@ const PetfulApiService = {
   },
 
   deleteCat() {
-    return fetch(`${config.API_ENDPOINT}/cats/:id`, {
+    return fetch(`${config.API_ENDPOINT}/cats/delete`, {
       method: 'DELETE',
       headers: {
         'content-type' : 'application/json'
@@ -47,7 +47,7 @@ const PetfulApiService = {
   },
 
   deleteAdopter() {
-    return fetch(`${config.API_ENDPOINT}/adopters`, {
+    return fetch(`${config.API_ENDPOINT}/adopters/delete`, {
       method: 'DELETE',
       headers: {
         'content-type' : 'application/json'   

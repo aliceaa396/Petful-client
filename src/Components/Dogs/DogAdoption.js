@@ -7,31 +7,28 @@ export default class DogAdoption extends Component {
     super(props)
   
     this.state = {
-      dog:[],
+      dogs:[],
       queue:[],
       loading: true,
       error: null
     }
   }
-  
-  componentDidMount() {
-    this.getDog();
-    this.getQueue();
-  }
 
   getDog = () => {
     PetfulApiService.getDog()
-      .then(res => res.json())
-      .then(dog => this.setState({ dog }))
-      .catch((error) => {
-        this.setState({ error })
-      })
+    .then(res => res.json())
+    .then(dogs => {
+      this.setState({ dogs })
+   })
+    .catch((error) => {
+      this.setState({ error })
+    })
   }
 
   deleteDog = () => {
     PetfulApiService.deleteDog();
-      this.deleteAdopter()
-      this.getDog()
+      this.deleteAdopter();
+      this.getDog();
   }
 
   getQueue = () => {
@@ -66,25 +63,34 @@ export default class DogAdoption extends Component {
     )
   }
 
+  componentDidMount() {
+    this.getDog();
+    this.getQueue();
+  }
+
 
   render() {
-    const dog  = this.state.dog;
-    console.log(this.state.dog)
+    const dogs  = this.state.dogs;
 
     return (
       <div>
         <Link to="/request">
-          <img src={dog.imageURL} alt={dog.name} />
+          <img src={dogs.imageURL} alt={dogs.name} />
         </Link>
         <div>
-          <span>Name: </span>{dog.name}
-          <span>Description: </span>{dog.imageURL}
-          <span>Sex: </span>{dog.sex}
-          <span>Age: </span>{dog.age}
-          <span>Breed: </span>{dog.breed}
-          <span>Story: </span>{dog.story}
+          <span>Name: </span>{dogs.name} <br/>
+          <span>Description: </span>{dogs.imageDescription} <br/>
+          <span>Sex: </span>{dogs.sex} <br/>
+          <span>Age: </span>{dogs.age} <br/>
+          <span>Breed: </span>{dogs.breed} <br/>
+          <span>Story: </span>{dogs.story} <br/>
         </div>
-  
+        <button 
+          type="click" 
+          onClick={() => this.deleteDog()}
+        > 
+          Adopt Me! 
+        </button>
 
         <div>
           <h3> Place in Line </h3>

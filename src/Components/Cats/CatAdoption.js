@@ -7,22 +7,19 @@ export default class CatAdoption extends Component {
     super(props)
   
     this.state = {
-      cat:[],
+      cats:[],
       queue:[],
       loading: true,
       error: null
     }
   }
   
-  componentDidMount() {
-    this.getCat();
-    this.getQueue();
-  }
-
   getCat = () => {
     PetfulApiService.getCat()
       .then(res => res.json())
-      .then(cat => this.setState({ cat }))
+      .then(cats => {
+        this.setState({ cats })
+     })
       .catch((error) => {
         this.setState({ error })
       })
@@ -49,7 +46,7 @@ export default class CatAdoption extends Component {
   }
 
   displayQ = (q) => {
-    let str = "";
+    let str = '';
     let currNode = q.first
     while(currNode !== null) {
       str += currNode.value.name + ', ';
@@ -66,25 +63,42 @@ export default class CatAdoption extends Component {
     )
   }
 
+  componentDidMount() {
+    this.getCat();
+    this.getQueue();
+  }
+
 
   render() {
-    const cat = this.state.cat;
-    console.log(this.state.cat)
+    const cats = this.state.cats;
+    console.log(this.state.queue)
 
     return (
-      <section>
+      <div>
         <Link to="/request">
-          <img src={cat.imageURL} alt={cat.name} />
+          <img src={cats.imageURL} alt={cats.name} />
         </Link>
-        <ul>
-          <li>Name: {cat.name}</li>
-          <li>Description: {cat.imageURL}</li>
-          <li>Sex: {cat.sex}</li>
-          <li>Age: {cat.age}</li>
-          <li>Breed: {cat.breed}</li>
-          <li>Story: {cat.story}</li>
-        </ul>
-      </section>
+        <div>
+          <span>Name: </span>{cats.name} <br/>
+          <span>Description: </span>{cats.imageDescription} <br/>
+          <span>Sex: </span>{cats.sex} <br/>
+          <span>Age: </span>{cats.age} <br/>
+          <span>Breed: </span>{cats.breed} <br/>
+          <span>Story: </span>{cats.story} <br/>
+        </div>
+        <button 
+          type="click" 
+          onClick={() => this.deleteCat()}
+        > 
+          Adopt Me! 
+        </button>
+
+        <div>
+          <h3> Place in Line </h3>
+          {this.displayLoading()}
+        </div>
+      </div> 
     );
+
   }
 }
