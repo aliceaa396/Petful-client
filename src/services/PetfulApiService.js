@@ -2,7 +2,7 @@ import config from '../config';
 
 const PetfulApiService = {
   getDog(){
-    return fetch(`${config.API_ENDPOINT}/dogs`, {
+    return fetch(`${config.API_ENDPOINT}/api/dogs`, {
       method: 'GET',
       headers: {
         'content-type' : 'application/json'   
@@ -11,7 +11,7 @@ const PetfulApiService = {
   },
 
   deleteDog() {
-    return fetch(`${config.API_ENDPOINT}/dogs/delete`, {
+    return fetch(`${config.API_ENDPOINT}/api/dogs/delete`, {
       method: 'DELETE',
       headers: {
         'content-type' : 'application/json'
@@ -20,7 +20,7 @@ const PetfulApiService = {
   },
  
   getCat() {
-    return fetch(`${config.API_ENDPOINT}/cats`, {
+    return fetch(`${config.API_ENDPOINT}/api/cats`, {
       method: 'GET',
       headers: {
         'content-type' : 'application/json'   
@@ -29,7 +29,7 @@ const PetfulApiService = {
   },
 
   deleteCat() {
-    return fetch(`${config.API_ENDPOINT}/cats/delete`, {
+    return fetch(`${config.API_ENDPOINT}/api/cats/delete`, {
       method: 'DELETE',
       headers: {
         'content-type' : 'application/json'
@@ -38,7 +38,7 @@ const PetfulApiService = {
   },
 
   getQueue() {
-    return fetch(`${config.API_ENDPOINT}/adopters`, {
+    return fetch(`${config.API_ENDPOINT}/api/adopters`, {
       method: 'GET',
       headers: {
         'content-type' : 'application/json'   
@@ -47,7 +47,7 @@ const PetfulApiService = {
   },
 
   deleteAdopter() {
-    return fetch(`${config.API_ENDPOINT}/adopters/delete`, {
+    return fetch(`${config.API_ENDPOINT}/api/adopters/delete`, {
       method: 'DELETE',
       headers: {
         'content-type' : 'application/json'   
