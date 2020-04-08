@@ -10,6 +10,7 @@ export default class DogAdoption extends Component {
       dogs:[],
       queue:[],
       loading: true,
+      yourTurn: false,
       error: null
     }
   }
@@ -38,6 +39,7 @@ export default class DogAdoption extends Component {
       .catch((error) => {
         this.setState({ error })
       })
+      
   }
 
   deleteAdopter = () => {
@@ -61,17 +63,35 @@ export default class DogAdoption extends Component {
     ) : (
       this.displayQ(this.state.queue)
     )
-  }
+  };
+
+  // enableBtn = () => {
+  //   if(this.state.yourTurn === false) {
+
+  //   }
+  // }
+
+  // adopterBtn = () => {
+  //   if(q.name === 'you') {
+  //     this.setState({yourTurn: true})
+  //   } else {
+  //     this.setState({yourTurn: false})
+  //   }
+  // }
+ 
 
   componentDidMount() {
-    this.getDog();
-    this.getQueue();
+    setInterval(() => {
+      this.getDog();
+      this.deleteDog();
+      this.deleteAdopter();
+    }, 3000)
+    
   }
-
 
   render() {
     const dogs  = this.state.dogs;
-
+   
     return (
       <div>
         <Link to="/request">
