@@ -9,7 +9,9 @@ export class Landing extends Component {
         <div>
           <h2> Adopt a Pet! </h2>
           <img className="hero" src={stockCD} />
-          <p>Start the adoption process now and get on our wait list!</p>
+          <p>
+            Start the adoption process by clicking on what type of pet youre intrested in! After you do so you will be able to add your name to the line of adopters.
+          </p>
         </div>
   
 
