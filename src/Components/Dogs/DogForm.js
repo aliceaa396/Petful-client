@@ -24,7 +24,7 @@ export class DogForm extends Component {
 
 
   render() {
-    // const disabled = (this.props.currentUser !== ' ') ? 'disabled' : ' ';
+    
     return (
       <div>
         <form className="submission-form">
