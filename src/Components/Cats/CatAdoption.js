@@ -1,24 +1,30 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PetfulApiService from "../../services/PetfulApiService";
+import UpNext from '../Adopters/UpNext';
+import Queue from '../../Queue';
+import CatForm from "../Cats/CatForm";
+
+const adopters = ['Brendan','Kris','Abby','Luis','Wanda','Dwight','Andy','Martha','John','Siri','Cortona']
+ const q = new Queue();
+ q.enqueue('Colson')
+ q.enqueue('Baker')
 
 export default class CatAdoption extends Component {
-  constructor(props) {
-    super(props)
-  
-    this.state = {
-      cats:[],
-      queue:[],
-      loading: true,
-      error: null
-    }
+  state = {
+    currentUser: '',
+    adopterLine: q,
+    currentPet: {},
+    cats:[],
+    queue:[],
+    error: null
   }
   
   getCat = () => {
     PetfulApiService.getCat()
       .then(res => res.json())
       .then(cats => {
-        this.setState({ cats })
+        this.setState({ cats:cats })
      })
       .catch((error) => {
         this.setState({ error })
@@ -27,8 +33,21 @@ export default class CatAdoption extends Component {
 
   deleteCat = () => {
     PetfulApiService.deleteCat();
-      this.deleteAdopter()
-      this.getCat()
+  }
+
+
+  deleteAdopter = () => {
+    const q = new Queue();
+    let node = this.state.adopterLine.first.next;
+    while(node !== null) {
+      q.enqueue(node.value)
+      node = node.next
+    }
+    if (this.state.currentUser === this.state.adopterLine.first.value) {
+      this.setState({ currentUser: ''})
+    } else {
+      this.setState({adopterLine: q})
+    }
   }
 
   getQueue = () => {
@@ -40,38 +59,47 @@ export default class CatAdoption extends Component {
       })
   }
 
-  deleteAdopter = () => {
-    PetfulApiService.deleteAdopter();
-    this.getQueue();
-  }
-
-  displayQ = (q) => {
-    let str = '';
-    let currNode = q.first
-    while(currNode !== null) {
-      str += currNode.value.name + ', ';
-      currNode = currNode.next;
+  queueUser = (name) => {
+    const q = new Queue();
+    let node = this.state.adopterLine.first;
+    while(node !== null) {
+      q.enqueue(node.value)
+      node = node.next
     }
-    return (str);
+    q.enqueue(name);
+    this.setState({adopterLine: q})
   }
 
-  displayLoading = () => {
-    return this.state.loading ? (
-      <h3> Loading List. . .</h3>
-    ) : (
-      this.displayQ(this.state.queue)
-    )
-  }
-
-  componentDidMount() {
+  adoptCat = () => {
+    this.deleteAdopter();
     this.getCat();
-    this.getQueue();
+    this.deleteCat();
+  }
+ 
+  componentDidMount() {
+    console.log(adopters)
+
+    const name = adopters[Math.floor(Math.random() * (adopters.length-1))+1];
+    this.getCat();
+
+    setInterval(() => {
+      if(this.state.adopterLine.first && this.state.adopterLine.first.value !== this.state.currentUser) {
+        let name = adopters[Math.floor(Math.random() * (adopters.length-1))];
+        this.adoptCat(this.state.adopterLine.first.value, this.state.currentPet);
+        this.queueUser(name)
+        
+      }
+    }, 3000)
+  }
+
+  setCurrentUser = (name) => {
+    this.setState({currentUser: name})
   }
 
 
   render() {
+    const disabled = this.state.adopterLine.first && this.state.currentUser === this.state.adopterLine.first.value ? '' : 'disabled'
     const cats = this.state.cats;
-    console.log(this.state.queue)
 
     return (
       <div>
@@ -87,16 +115,21 @@ export default class CatAdoption extends Component {
           <span>Story: </span>{cats.story} <br/>
         </div>
         <button 
-          type="click" 
-          onClick={() => this.deleteCat()}
+          type="click"
+          className="adopt-btn"
+          onClick={() => this.adoptCat(this.state.adopterLine.first.value, this.state.currentPet)}
+          disabled={disabled}
         > 
           Adopt Me! 
         </button>
-
-        <div>
-          <h3> Place in Line </h3>
-          {this.displayLoading()}
-        </div>
+        <UpNext
+          users={this.state.adopterLine}
+        />
+        <CatForm
+          queueUser={this.queueUser}
+          currentUser={this.state.currentUser}
+          setCurrentUser={this.setCurrentUser}
+        />
       </div> 
     );
 

@@ -22,4 +22,11 @@ input {
 .adopt-btn {
   font-size: 15px;
   color: white;
+  background-color: darkgray;
+}
+
+.adopt-btn:focus {
+  font-size: 15px;
+  color: black;
+  background-color: #fafafa;
 }

@@ -1,25 +1,32 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PetfulApiService from "../../services/PetfulApiService";
+import UpNext from '../Adopters/UpNext';
+import Queue from '../../Queue';
+import DogForm from "../Dogs/DogForm";
+import './DogForm.css'
 
+ const adopters = ['Brendan','Kris','Abby','Luis','Wanda','Dwight','Andy','Martha','John','Siri','Cortona']
+ const q = new Queue();
+ q.enqueue('Marshall')
+ q.enqueue('Mathers')
 export default class DogAdoption extends Component {
-  constructor(props) {
-    super(props)
-  
-    this.state = {
-      dogs:[],
-      queue:[],
-      loading: true,
-      yourTurn: false,
-      error: null
-    }
+ 
+  state = {
+    currentUser: '',
+    adopterLine: q,
+    currentPet: {},
+    dogs:[],
+    queue:[],
+    error: null
   }
+
 
   getDog = () => {
     PetfulApiService.getDog()
     .then(res => res.json())
     .then(dogs => {
-      this.setState({ dogs })
+      this.setState({ dogs:dogs})
    })
     .catch((error) => {
       this.setState({ error })
@@ -28,70 +35,64 @@ export default class DogAdoption extends Component {
 
   deleteDog = () => {
     PetfulApiService.deleteDog();
-      this.deleteAdopter();
-      this.getDog();
   }
 
-  getQueue = () => {
-    PetfulApiService.getQueue()
-      .then(res => res.json())
-      .then(queue => this.setState({queue, loading: false}))
-      .catch((error) => {
-        this.setState({ error })
-      })
-      
-  }
 
   deleteAdopter = () => {
-    PetfulApiService.deleteAdopter();
-    this.getQueue();
-  }
-
-  displayQ = (q) => {
-    let str = '';
-    let currNode = q.first
-    while(currNode !== null) {
-      str += currNode.value.name + ', ';
-      currNode = currNode.next;
+    const q = new Queue();
+    let node = this.state.adopterLine.first.next;
+    while(node !== null) {
+      q.enqueue(node.value)
+      node = node.next
     }
-    return (str);
+    if (this.state.currentUser === this.state.adopterLine.first.value) {
+      this.setState({ currentUser: ''})
+    } else {
+      this.setState({adopterLine: q})
+    }
   }
 
-  displayLoading = () => {
-    return this.state.loading ? (
-      <h3> Loading List. . .</h3>
-    ) : (
-      this.displayQ(this.state.queue)
-    )
-  };
+  queueUser = (name) => {
+    const q = new Queue();
+    let node = this.state.adopterLine.first;
+    while(node !== null) {
+      q.enqueue(node.value)
+      node = node.next
+    }
+    q.enqueue(name);
+    this.setState({adopterLine: q})
+  }
 
-  // enableBtn = () => {
-  //   if(this.state.yourTurn === false) {
+  adoptDog = () => {
+    this.deleteAdopter();
+    this.getDog();
+    this.deleteDog();
+  }
 
-  //   }
-  // }
-
-  // adopterBtn = () => {
-  //   if(q.name === 'you') {
-  //     this.setState({yourTurn: true})
-  //   } else {
-  //     this.setState({yourTurn: false})
-  //   }
-  // }
  
-
   componentDidMount() {
+
+    const name = adopters[Math.floor(Math.random() * (adopters.length-1))+1];
+    this.getDog();
+
     setInterval(() => {
-      this.getDog();
-      this.deleteDog();
-      this.deleteAdopter();
+      if(this.state.adopterLine.first && this.state.adopterLine.first.value !== this.state.currentUser) {
+        let name = adopters[Math.floor(Math.random() * (adopters.length-1))];
+        this.adoptDog(this.state.adopterLine.first.value, this.state.currentPet);
+        this.queueUser(name)
+        
+      }
     }, 3000)
-    
+  }
+
+  setCurrentUser = (name) => {
+    this.setState({currentUser: name})
   }
 
   render() {
+    const disabled = this.state.adopterLine.first && this.state.currentUser === this.state.adopterLine.first.value ? '' : 'disabled'
     const dogs  = this.state.dogs;
-   
+
     return (
       <div>
         <Link to="/request">
@@ -106,16 +107,26 @@ export default class DogAdoption extends Component {
           <span>Story: </span>{dogs.story} <br/>
         </div>
         <button 
-          type="click" 
-          onClick={() => this.deleteDog()}
+          type="click"
+          className="adopt-btn"
+          onClick={() => this.adoptDog(this.state.adopterLine.first.value, this.state.currentPet)}
+          disabled={disabled}
         > 
           Adopt Me! 
         </button>
+        <UpNext
+          users={this.state.adopterLine}
+        />
+        <DogForm
+          queueUser={this.queueUser}
+          currentUser={this.state.currentUser}
+          setCurrentUser={this.setCurrentUser}
+        />
 
-        <div>
+        {/* <div>
           <h3> Place in Line </h3>
           {this.displayLoading()}
-        </div>
+        </div> */}
       </div> 
     );
   }

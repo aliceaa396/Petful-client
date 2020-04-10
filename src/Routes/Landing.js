@@ -11,40 +11,17 @@ export class Landing extends Component {
           <img className="hero" src={stockCD} />
           <p>Start the adoption process now and get on our wait list!</p>
         </div>
-        <div className="container">
-          <form className="submission-form">
-            <label className="form-name">Adopt a Cat</label>
-            <input
-              type="text"
-              className="add-name-input"
-              name="catName"
-              id="form-name"
-            />
-            <button className="adopt-btn" type="submit">
-              Get on Line
-            </button>
+  
 
-            <Link to="/cats">
-              <button className="adopt-btn"> See our Cats! </button>
-            </Link>
-          </form>
-
-          <form className="submission-form">
-            <label className="form-name">Adopt a Dog</label>
-            <input
-              type="text"
-              className="add-name-input"
-              name="dogName"
-              id="form-name"
-            />
-            <button className="adopt-btn" type="submit">
-              Get on Line
-            </button>
-            <Link to="/dogs">
-              <button className="adopt-btn"> See our Dogs! </button>
-            </Link>
-          </form>
-        </div>
+        <Link to="/cats">
+          <button className="adopt-btn"> See our Cats! </button>
+        </Link>
+        
+          
+        <Link to="/dogs">
+          <button className="adopt-btn"> See our Dogs! </button>
+        </Link>
+         
       </>
     );
   }

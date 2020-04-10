@@ -3,40 +3,32 @@ import { Link } from 'react-router-dom'
 
 import './Form.css'
 export default class Form extends Component {
-  static defaultProps = {
-    history: {
-      push: () => {}
-    }
-  };
-  
   state = {
-    catAdopter: "",
-    dogAdopter: ""
+    adopterName:""
   };
 
-  handleSubmitCat = e => {
+  handleSubmitCat = (e) => {
     e.preventDefault();
-    const { setCatWaitList, setCatPerson } = this.context;
-    const { catName } = e.target;
-    setCatWaitList(catName.value);
-    setCatPerson(catName.value);
-    catName.value = "";
-  }
+    this.props.setCurrentUser(this.state.adopterName)
+    const { queueUser } = this.props;
+    queueUser(this.state.adopterName)
+    this.setState({
+      adopterName: ""
+    })
+  };
 
-
-  handleSubmitDog = e => {
-    e.preventDefault();
-    const { setDogWaitList, setDogPerson } = this.context;
-    const { dogName } = e.target;
-    setDogWaitList(dogName.value);
-    setDogPerson(dogName.value);
-    dogName.value = "";
-  }
+  
+  handleAdopter = (e) => {
+    this.setState({
+      adopterName: e.target.value
+    })
+  };
 
   render() {
+    const disabled = (this.props.currentUser !== ' ') ? 'disabled' : ' ';
     return (
       <div className="container">
-        <form className="submission-form" onSubmit={this.handleSubmitCat}>
+        <form className="submission-form">
           <label className="form-name">
             Adopt a Cat
           </label>
@@ -45,16 +37,16 @@ export default class Form extends Component {
             className="add-name-input"
             name="catName"
             id="form-name"
-            onChange={e => this.setState({ catAdopter: e.target.value})}
+            onChange={e => this.handleAdopter(e)}
           />
-          <button className="adopt-btn" type="submit"> Join the Waiting List </button>
+          <button className="adopt-btn" type="submit" onClick={e => this.state.handleSubmitCat(e)} disabled={disabled}> Join the Waiting List </button>
 
           <Link to="/cat-adoptions">
             <button className="adopt-btn"> See all of our Cats! </button>
           </Link>
         </form>
 
-        <form className="submission-form" onSubmit={this.handleSubmitDog}>
+        <form className="submission-form">
           <label className="form-name">
             Adopt a Dog
           </label>
@@ -63,11 +55,11 @@ export default class Form extends Component {
             className="add-name-input"
             name="dogName"
             id="form-name"
-            onChange={e => this.setState({ dogAdopter: e.target.value})}
+            onChange={e => this.handleAdopter(e)}
           />
-          <button className="adopt-btn" type="submit"> Join the Waiting List </button>
+          <button className="adopt-btn" type="submit"onClick={e => this.state.handleSubmitDog(e)}> Join the Waiting List </button>
 
-          <Link to="/dog-adoptions">
+          <Link to="/dogs">
             <button className="adopt-btn"> See all of our Dogs! </button>
           </Link>
         </form>
