@@ -2,7 +2,7 @@ import config from '../config';
 
 const PetfulApiService = {
   getDog(){
-    return fetch(`${config.API_ENDPOINT}/api/dogs`, {
+    return fetch(`${config.API_ENDPOINT}/dogs`, {
       method: 'GET',
       headers: {
         'content-type' : 'application/json'   
@@ -11,7 +11,7 @@ const PetfulApiService = {
   },
 
   deleteDog() {
-    return fetch(`${config.API_ENDPOINT}/api/dogs/delete`, {
+    return fetch(`${config.API_ENDPOINT}/dogs/delete`, {
       method: 'DELETE',
       headers: {
         'content-type' : 'application/json'
